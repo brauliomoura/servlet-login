@@ -1,11 +1,14 @@
 package br.com.impacta.javaweb;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import br.com.impacta.javaweb.bean.Usuario;
 
 /**
  * Servlet implementation class SistemaServlet
@@ -19,9 +22,10 @@ public class SistemaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String login = request.getParameter("login");
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
 		
-		StringBuilder sb = new StringBuilder("<H1>Bem vindo " + login + "!</H1><p>");
+				
+		StringBuilder sb = new StringBuilder("<H1>Bem vindo " + usuario.getLogin() + "!</H1><p>");
 		sb.append("<H2>Esta é a página principal do sistema</H2>");
 		
 		response.getWriter().append(sb.toString());
