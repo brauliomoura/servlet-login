@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,10 +26,18 @@ public class ValidaLogin extends HttpServlet {
 		
 		String senha = request.getParameter("senha");
 		String login = request.getParameter("login");
-		
+
 		Usuario user = new Usuario();
 		user.setLogin(login);
 		user.setSenha(senha);
+		
+		//Verificar o cookie de email do usuario
+		Cookie[] cookies = request.getCookies();
+		for(Cookie cook : cookies) {
+			if(cook.getName().equals("email")) {
+				user.setEmail(cook.getValue());
+			}
+		}
 		
 		request.getSession().setAttribute("usuario", user);
 		
